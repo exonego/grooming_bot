@@ -44,6 +44,7 @@ class Config:
 
 
 def load_config(path: str | None = None) -> Config:
+    "Loads configuration for the app."
     env = Env()
 
     if path:
@@ -65,7 +66,7 @@ def load_config(path: str | None = None) -> Config:
     db_username = env("POSTGRES_USER")
     db_password = SecretStr(env("POSTGRES_PASSWORD"))
     db = DBSettings(
-        dsn=f"postgresql+asyncpg://{db_username}:{db_password}@{db_host}:{db_port}/{db_name}"
+        dsn=f"postgresql+asyncpg://{db_username}:{db_password.get_secret_value()}@{db_host}:{db_port}/{db_name}"
     )
 
     redis = RedisSettings(
