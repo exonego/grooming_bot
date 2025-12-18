@@ -5,7 +5,7 @@
 .venv/
 
 # Migration files (temporarily, while models are under development)
-app/infrastructure/database/migrations/versions/
+infrastructure/database/migrations/versions/
 
 # Generated files
 .mypy_cache/
