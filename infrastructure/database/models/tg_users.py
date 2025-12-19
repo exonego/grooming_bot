@@ -19,8 +19,8 @@ class TgUser(Base):
     )
 
     tg_id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
-    first_name: Mapped[str] = mapped_column(Text, nullable=False)
-    phone_number: Mapped[str] = mapped_column(Text, nullable=False)
+    first_name: Mapped[str] = mapped_column(Text, nullable=True)
+    phone_number: Mapped[str] = mapped_column(Text, nullable=True)
     role: Mapped[str] = mapped_column(Text, nullable=False)
     language: Mapped[str] = mapped_column(Text, nullable=False)
     banned: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)

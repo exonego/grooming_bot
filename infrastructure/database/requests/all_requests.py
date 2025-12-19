@@ -9,6 +9,14 @@ class TgUsers:
     def get_user(self):
         return tg_users.get_user
 
+    @property
+    def add_user(self):
+        return tg_users.add_user
+
+    @property
+    def set_role(self):
+        return tg_users.set_role
+
 
 @dataclass
 class Requests:

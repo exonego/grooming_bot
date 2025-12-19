@@ -4,13 +4,15 @@ from typing import Any
 
 from aiogram import BaseMiddleware
 from aiogram.types import Update
+
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
 logger = logging.getLogger(__name__)
 
 
 class DbSessionMiddleware(BaseMiddleware):
-    """Middleware which drops session into the context"""
+    """Middleware which drops session into the context."""
+
     def __init__(self, session_pool: async_sessionmaker):
         super().__init__()
         self.session_pool = session_pool
@@ -21,6 +23,7 @@ class DbSessionMiddleware(BaseMiddleware):
         event: Update,
         data: dict[str, Any],
     ) -> Any:
+
         async with self.session_pool() as session:
             data["session"] = session
             return await handler(event, data)

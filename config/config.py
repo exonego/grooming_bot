@@ -73,7 +73,7 @@ def load_config(path: str | None = None) -> Config:
         host=env("REDIS_HOST"),
         port=env.int("REDIS_PORT"),
         db=env.int("REDIS_DATABASE"),
-        password=env("REDIS_PASSWORD"),
+        password=SecretStr(env("REDIS_PASSWORD")),
         username=env("REDIS_USERNAME"),
     )
 

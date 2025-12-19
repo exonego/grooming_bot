@@ -12,11 +12,13 @@ class TranslatorRunner:
 
 class CmdStart:
     @staticmethod
-    def left() -> Literal["""Здравствуйте, вы написали в Зоорум ЗооВайб!\n
-&lt;b&gt;Для записи отправьте /record&lt;/b&gt;"""]: ...
+    def left() -> Literal["""&lt;b&gt;Здравствуйте, вы написали в Зоорум ЗооВайб!&lt;/b&gt;\n
+Для записи отправьте /record"""]: ...
     @staticmethod
-    def user(*, first_name: PossibleValue) -> Literal["""Здравствуйте, { $first_name }!\n
-&lt;b&gt;Для записи отправьте /record&lt;/b&gt;"""]: ...
+    def user(*, first_name: PossibleValue) -> Literal["""&lt;b&gt;Здравствуйте, { $first_name }!&lt;/b&gt;\n\n
+Для записи отправьте /record"""]: ...
+    @staticmethod
+    def admin() -> Literal["""&lt;/b&gt;Здравствуйте, Администратор!&lt;/b&gt;\n\n"""]: ...
 
 class Cmd:
     start: CmdStart

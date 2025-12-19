@@ -4,17 +4,17 @@ from typing import Any
 
 from aiogram import BaseMiddleware
 from aiogram.types import Update, User
+
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from infrastructure.database import Requests
 
 logger = logging.getLogger(__name__)
-
 requests = Requests()
 
 
 class ShadowBanMiddleware(BaseMiddleware):
-    """Middleware which blocks updates from a banned user"""
+    """Middleware which blocks updates from a banned user."""
 
     async def __call__(
         self,

@@ -4,6 +4,7 @@ from typing import Any
 
 from aiogram import BaseMiddleware
 from aiogram.types import Update, User
+
 from fluentogram import TranslatorHub
 
 from infrastructure.database import TgUser
@@ -12,6 +13,12 @@ logger = logging.getLogger(__name__)
 
 
 class TranslatorRunnerMiddleware(BaseMiddleware):
+    """Middleware which drops TranslatorRunner into the context."""
+
+    def __init__(self, translator_hub: TranslatorHub):
+        super().__init__()
+        self.translator_hub = translator_hub
+
     async def __call__(
         self,
         handler: Callable[[Update, dict[str, Any]], Awaitable[Any]],
@@ -30,7 +37,6 @@ class TranslatorRunnerMiddleware(BaseMiddleware):
         else:
             user_lang = user.language_code
 
-        hub: TranslatorHub = data.get("_translator_hub")
-        data["i18n"] = hub.get_translator_by_locale(locale=user_lang)
+        data["i18n"] = self.translator_hub.get_translator_by_locale(locale=user_lang)
 
         return await handler(event, data)
