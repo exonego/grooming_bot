@@ -5,6 +5,8 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.fsm.storage.redis import RedisStorage
 
+from aiogram_dialog import setup_dialogs
+
 from redis.asyncio import Redis
 
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
@@ -74,6 +76,10 @@ async def main(config: Config) -> None:
         TranslatorRunnerMiddleware(translator_hub=translator_hub)
     )
     dp.update.outer_middleware(UserRoleMiddleware())
+
+    # Setup dialogs
+    logger.info("Setting up dialogs...")
+    setup_dialogs(dp)
 
     # Start polling
     await dp.start_polling(bot, admin_id=config.bot.admin_id)
