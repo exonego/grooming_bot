@@ -13,6 +13,8 @@ from bot.enums.roles import UserRole
 if TYPE_CHECKING:
     from I18N import TranslatorRunner
 
+logger = logging.getLogger(__name__)
+
 requests = Requests()
 start_router = Router()
 
