@@ -4,14 +4,9 @@ from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.fsm.storage.redis import RedisStorage
-
 from aiogram_dialog import setup_dialogs
-
 from redis.asyncio import Redis
-
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
-
-from fluentogram import TranslatorHub
 
 
 from bot.handlers.start import start_router
@@ -21,9 +16,7 @@ from bot.middlewares import (
     TranslatorRunnerMiddleware,
     UserRoleMiddleware,
 )
-
 from config.config import Config
-
 from I18N import i18n_factory
 
 
@@ -37,12 +30,14 @@ async def main(config: Config) -> None:
 
     # Init redis storage
     logger.info("Init redis storage...")
-    storage = Redis(
-        host=config.redis.host,
-        port=config.redis.port,
-        db=config.redis.db,
-        username=config.redis.username,
-        password=config.redis.password.get_secret_value(),
+    storage = RedisStorage(
+        redis=Redis(
+            host=config.redis.host,
+            port=config.redis.port,
+            db=config.redis.db,
+            username=config.redis.username,
+            password=config.redis.password.get_secret_value(),
+        )
     )
 
     # Create sqlalchemy engine to connect db
@@ -62,7 +57,7 @@ async def main(config: Config) -> None:
         token=config.bot.token.get_secret_value(),
         default=DefaultBotProperties(parse_mode=ParseMode.HTML),
     )
-    dp = Dispatcher()
+    dp = Dispatcher(storage=storage)
 
     # Include routers into dispatcher
     logger.info("Including routers into dispatcher...")
