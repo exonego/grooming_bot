@@ -4,12 +4,14 @@ from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.fsm.storage.redis import RedisStorage
+from aiogram.fsm.storage.base import DefaultKeyBuilder
 from aiogram_dialog import setup_dialogs
 from redis.asyncio import Redis
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 
 
 from bot.handlers.start import start_router
+from bot.handlers.user.user_cmd import user_cmd_router
 from bot.middlewares import (
     DbSessionMiddleware,
     ShadowBanMiddleware,
@@ -37,7 +39,8 @@ async def main(config: Config) -> None:
             db=config.redis.db,
             username=config.redis.username,
             password=config.redis.password.get_secret_value(),
-        )
+        ),
+        key_builder=DefaultKeyBuilder(with_destiny=True),
     )
 
     # Create sqlalchemy engine to connect db
@@ -61,7 +64,7 @@ async def main(config: Config) -> None:
 
     # Include routers into dispatcher
     logger.info("Including routers into dispatcher...")
-    dp.include_router(start_router)
+    dp.include_routers(start_router, user_cmd_router)
 
     # Register middlewares
     logger.info("Registration middlewares...")

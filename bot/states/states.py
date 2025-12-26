@@ -3,7 +3,7 @@ from aiogram.fsm.state import State, StatesGroup
 
 class RecordSG(StatesGroup):
     fill_name = State()
-    fill_phone = State()
+    send_contact = State()
     register = State()
 
     choose_pet = State()

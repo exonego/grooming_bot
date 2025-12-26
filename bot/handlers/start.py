@@ -28,6 +28,14 @@ async def cmd_start(
     user_role: UserRole,
 ):
     """Reacts to /start"""
+    if db_user is None:
+        await requests.tg_users.add_user(
+            session=session,
+            telegram_id=message.from_user.id,
+            language=message.from_user.language_code,
+            role=user_role,
+        )
+
     if user_role == UserRole.USER:
         if db_user is None or db_user.first_name is None:
             await message.answer(text=i18n.cmd.start.left())
@@ -37,11 +45,3 @@ async def cmd_start(
             )
     else:
         await message.answer(text=i18n.cmd.start.admin())
-
-    if db_user is None:
-        await requests.tg_users.add_user(
-            session=session,
-            telegram_id=message.from_user.id,
-            language=message.from_user.language_code,
-            role=user_role,
-        )

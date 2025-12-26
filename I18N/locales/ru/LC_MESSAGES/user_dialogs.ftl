@@ -1,4 +1,17 @@
 record-registration = Пройдите пожалуйста небольшую регистрацию прежде чем мы вас запишем
 record-fill-name =
-    <b>Пожалуйста, введите ваше имя (Только кириллица, без пробелов)</b>
-    Для отмены отправьте /cancel
+    <b>Введите ваше имя</b>
+record-your-name = Ваше имя: { $first_name }
+record-send-contact = <b>Отправьте контакт, нажав на кнопку внизу</b>
+record-button-send-contact = ☎️ Отправить контакт
+record-register =
+    <b>Ваше имя: { $first_name }</b>
+    <b>Ваш номер телефона: { $phone_number }</b>
+
+    <b><i>Подтвердить регистрацию?</i></b>
+record-registration-completed = Регистрация завершена!
+record-registration-cancelled = Регистрация успешно прервана.
+
+record-choose-pet = <b>Какой у вас питомец?</b>
+record-button-pet-cat = 😺 Кот/кошка
+record-button-pet-dog = 🐶 Пес/собака

@@ -8,8 +8,69 @@ PossibleValue: TypeAlias = str | int | float | Decimal | bool | FluentType
 
 class TranslatorRunner:
     def get(self, path: str, **kwargs: PossibleValue) -> str: ...
-    cmd: Cmd
     record: Record
+    button: Button
+    cmd: Cmd
+
+class RecordRegistration:
+    @staticmethod
+    def __call__() -> Literal["""Пройдите пожалуйста небольшую регистрацию прежде чем мы вас запишем"""]: ...
+    @staticmethod
+    def completed() -> Literal["""Регистрация завершена!"""]: ...
+    @staticmethod
+    def cancelled() -> Literal["""Регистрация успешно прервана."""]: ...
+
+class RecordFill:
+    @staticmethod
+    def name() -> Literal["""&lt;b&gt;Введите ваше имя&lt;/b&gt;"""]: ...
+
+class RecordYour:
+    @staticmethod
+    def name(*, first_name: PossibleValue) -> Literal["""Ваше имя: { $first_name }"""]: ...
+
+class RecordSend:
+    @staticmethod
+    def contact() -> Literal["""&lt;b&gt;Отправьте контакт, нажав на кнопку внизу&lt;/b&gt;"""]: ...
+
+class RecordButtonSend:
+    @staticmethod
+    def contact() -> Literal["""☎️ Отправить контакт"""]: ...
+
+class RecordButtonPet:
+    @staticmethod
+    def cat() -> Literal["""😺 Кот/кошка"""]: ...
+    @staticmethod
+    def dog() -> Literal["""🐶 Пес/собака"""]: ...
+
+class RecordButton:
+    send: RecordButtonSend
+    pet: RecordButtonPet
+
+class RecordChoose:
+    @staticmethod
+    def pet() -> Literal["""&lt;b&gt;Какой у вас питомец?&lt;/b&gt;"""]: ...
+
+class Record:
+    registration: RecordRegistration
+    fill: RecordFill
+    your: RecordYour
+    send: RecordSend
+    button: RecordButton
+    choose: RecordChoose
+
+    @staticmethod
+    def register(*, first_name: PossibleValue, phone_number: PossibleValue) -> Literal["""&lt;b&gt;Ваше имя: { $first_name }&lt;/b&gt;
+&lt;b&gt;Ваш номер телефона: { $phone_number }&lt;/b&gt;
+
+&lt;b&gt;&lt;i&gt;Подтвердить регистрацию?&lt;/i&gt;&lt;/b&gt;"""]: ...
+
+class Button:
+    @staticmethod
+    def back() -> Literal["""◀️ Назад"""]: ...
+    @staticmethod
+    def cancel() -> Literal["""❌ Отмена"""]: ...
+    @staticmethod
+    def confirm() -> Literal["""✅ Подтвердить"""]: ...
 
 class CmdStart:
     @staticmethod
@@ -27,14 +88,3 @@ class CmdStart:
 
 class Cmd:
     start: CmdStart
-
-class RecordFill:
-    @staticmethod
-    def name() -> Literal["""&lt;b&gt;Пожалуйста, введите ваше имя (Только кириллица, без пробелов)&lt;/b&gt;
-Для отмены отправьте /cancel"""]: ...
-
-class Record:
-    fill: RecordFill
-
-    @staticmethod
-    def registration() -> Literal["""Пройдите пожалуйста небольшую регистрацию прежде чем мы вас запишем"""]: ...
