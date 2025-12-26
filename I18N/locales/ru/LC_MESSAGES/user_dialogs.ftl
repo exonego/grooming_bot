@@ -1,4 +1,4 @@
-record-registration = Пройдите пожалуйста небольшую регистрацию прежде чем мы вас запишем
+record-registration-start = Пройдите пожалуйста небольшую регистрацию прежде чем мы вас запишем
 record-fill-name =
     <b>Введите ваше имя</b>
 record-your-name = Ваше имя: { $first_name }
@@ -9,8 +9,8 @@ record-register =
     <b>Ваш номер телефона: { $phone_number }</b>
 
     <b><i>Подтвердить регистрацию?</i></b>
-record-registration-completed = Регистрация завершена!
-record-registration-cancelled = Регистрация успешно прервана.
+record-registration-completed = Регистрация успешно завершена!
+record-registration-cancelled = Регистрация прервана.
 
 record-choose-pet = <b>Какой у вас питомец?</b>
 record-button-pet-cat = 😺 Кот/кошка

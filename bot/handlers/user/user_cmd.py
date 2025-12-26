@@ -27,14 +27,18 @@ user_cmd_router.include_routers(record_dialog)
 @user_cmd_router.message(Command("record"))
 async def cmd_record(
     message: Message,
+    i18n: TranslatorRunner,
     db_user: TgUser,
     dialog_manager: DialogManager,
 ):
     if db_user.first_name is None:
-        await dialog_manager.start(state=RecordSG.fill_name, mode=StartMode.RESET_STACK)
+        await message.answer(text=i18n.record.registration.start())
+        await dialog_manager.start(
+            state=RecordSG.fill_name,
+            mode=StartMode.RESET_STACK,
+        )
     else:
         await dialog_manager.start(
             state=RecordSG.choose_pet,
             mode=StartMode.RESET_STACK,
-            data={"is_first_name": True},
         )

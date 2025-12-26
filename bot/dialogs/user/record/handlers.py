@@ -3,14 +3,14 @@ from typing import TYPE_CHECKING
 from aiogram.types import Message, CallbackQuery, ReplyKeyboardMarkup, KeyboardButton
 from aiogram_dialog import DialogManager
 from aiogram_dialog.widgets.kbd import Cancel
-from aiogram_dialog.widgets.input import ManagedTextInput
+from aiogram_dialog.widgets.input import ManagedTextInput, MessageInput
 from fluentogram import TranslatorRunner
 
 if TYPE_CHECKING:
     from I18N.locales.stub import TranslatorRunner  # type: ignore
 
 
-async def record_cancelled_handler(
+async def registration_cancelled_handler(
     callback: CallbackQuery, button: Cancel, dialog_manager: DialogManager
 ) -> None:
     i18n: TranslatorRunner = dialog_manager.middleware_data.get("i18n")
@@ -24,7 +24,6 @@ async def name_filled_handler(
     text: str,
 ) -> None:
     dialog_manager.dialog_data["first_name"] = text.strip()
-    dialog_manager.dialog_data["is_first_name"] = False
 
     i18n: TranslatorRunner = dialog_manager.middleware_data.get("i18n")
     await message.answer(
@@ -41,4 +40,14 @@ async def name_filled_handler(
             one_time_keyboard=True,
         ),
     )
+    await dialog_manager.next()
+
+
+async def contact_sent_handler(
+    message: Message,
+    widget: MessageInput,
+    dialog_manager: DialogManager,
+) -> None:
+    dialog_manager.dialog_data["phone_number"] = message.contact.phone_number
+
     await dialog_manager.next()
