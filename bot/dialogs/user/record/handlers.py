@@ -2,19 +2,17 @@ from typing import TYPE_CHECKING
 
 from aiogram.types import Message, CallbackQuery, ReplyKeyboardMarkup, KeyboardButton
 from aiogram_dialog import DialogManager
-from aiogram_dialog.widgets.kbd import Cancel
+from aiogram_dialog.widgets.kbd import Cancel, Button
 from aiogram_dialog.widgets.input import ManagedTextInput, MessageInput
 from fluentogram import TranslatorRunner
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from infrastructure.database import Requests
 
 if TYPE_CHECKING:
     from I18N.locales.stub import TranslatorRunner  # type: ignore
 
-
-async def registration_cancelled_handler(
-    callback: CallbackQuery, button: Cancel, dialog_manager: DialogManager
-) -> None:
-    i18n: TranslatorRunner = dialog_manager.middleware_data.get("i18n")
-    await callback.message.answer(text=i18n.record.registration.cancelled())
+requests = Requests()
 
 
 async def name_filled_handler(
@@ -49,5 +47,21 @@ async def contact_sent_handler(
     dialog_manager: DialogManager,
 ) -> None:
     dialog_manager.dialog_data["phone_number"] = message.contact.phone_number
+
+    await dialog_manager.next()
+
+
+async def registration_finished_handler(
+    callback: CallbackQuery,
+    button: Button,
+    dialog_manager: DialogManager,
+) -> None:
+    session: AsyncSession = dialog_manager.middleware_data.get("session")
+    await requests.tg_users.set_person(
+        session=session,
+        telegram_id=callback.from_user.id,
+        first_name=dialog_manager.dialog_data.get("first_name"),
+        phone_number=dialog_manager.dialog_data.get("phone_number"),
+    )
 
     await dialog_manager.next()

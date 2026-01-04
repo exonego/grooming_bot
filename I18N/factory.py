@@ -13,7 +13,6 @@ def i18n_factory() -> TranslatorHub:
                 translator=FluentBundle.from_files(
                     locale="ru",
                     filenames=[
-                        f"{DIR_PATH}/ru/LC_MESSAGES/commands.ftl",
                         f"{DIR_PATH}/ru/LC_MESSAGES/buttons.ftl",
                         f"{DIR_PATH}/ru/LC_MESSAGES/user_dialogs.ftl",
                     ],

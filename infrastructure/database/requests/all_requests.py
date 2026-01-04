@@ -17,6 +17,10 @@ class TgUsers:
     def set_role(self):
         return tg_users.set_role
 
+    @property
+    def set_person(self):
+        return tg_users.set_person
+
 
 @dataclass
 class Requests:

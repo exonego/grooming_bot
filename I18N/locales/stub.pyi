@@ -9,8 +9,8 @@ PossibleValue: TypeAlias = str | int | float | Decimal | bool | FluentType
 class TranslatorRunner:
     def get(self, path: str, **kwargs: PossibleValue) -> str: ...
     button: Button
+    menu: Menu
     record: Record
-    cmd: Cmd
 
 class Button:
     @staticmethod
@@ -19,6 +19,16 @@ class Button:
     def cancel() -> Literal["""❌ Отмена"""]: ...
     @staticmethod
     def confirm() -> Literal["""✅ Подтвердить"""]: ...
+
+class MenuButton:
+    @staticmethod
+    def record() -> Literal["""🗒️ Сделать запись"""]: ...
+
+class Menu:
+    button: MenuButton
+
+    @staticmethod
+    def text(*, first_name: PossibleValue) -> Literal["""&lt;b&gt;👋 Добро пожаловать, { $first_name }!&lt;/b&gt;"""]: ...
 
 class RecordRegistration:
     @staticmethod
@@ -71,20 +81,3 @@ class Record:
 &lt;b&gt;Ваш номер телефона: { $phone_number }&lt;/b&gt;
 
 &lt;b&gt;&lt;i&gt;Подтвердить регистрацию?&lt;/i&gt;&lt;/b&gt;"""]: ...
-
-class CmdStart:
-    @staticmethod
-    def left() -> Literal["""&lt;b&gt;Здравствуйте, вы написали в Зоорум ЗооВайб!&lt;/b&gt;
-
-
-Для записи отправьте /record"""]: ...
-    @staticmethod
-    def user(*, first_name: PossibleValue) -> Literal["""&lt;b&gt;Здравствуйте, { $first_name }!&lt;/b&gt;
-
-
-Для записи отправьте /record"""]: ...
-    @staticmethod
-    def admin() -> Literal["""&lt;b&gt;Здравствуйте, Администратор!&lt;/b&gt;"""]: ...
-
-class Cmd:
-    start: CmdStart

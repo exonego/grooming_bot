@@ -1,3 +1,4 @@
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from infrastructure.database import TgUser
@@ -38,4 +39,19 @@ async def set_role(
 
     user = await session.get(TgUser, telegram_id)
     user.role = role
+    await session.commit()
+
+
+async def set_person(
+    session: AsyncSession,
+    telegram_id: int,
+    first_name: str,
+    phone_number: str,
+) -> None:
+    stmt = select(TgUser).where(TgUser.tg_id == telegram_id)
+    result = await session.execute(stmt)
+    tg_user = result.scalar()
+
+    tg_user.first_name = first_name
+    tg_user.phone_number = phone_number
     await session.commit()

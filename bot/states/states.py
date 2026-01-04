@@ -1,6 +1,10 @@
 from aiogram.fsm.state import State, StatesGroup
 
 
+class UserMenuSG(StatesGroup):
+    menu = State()
+
+
 class RecordSG(StatesGroup):
     fill_name = State()
     send_contact = State()

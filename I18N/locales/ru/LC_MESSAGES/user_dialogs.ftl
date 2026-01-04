@@ -1,3 +1,11 @@
+menu-text = {$first_name ->
+    [unknown] <b>👋 Добро пожаловать в Зоорум ЗооВайб!</b>
+    *[other] <b>👋 Добро пожаловать, {$first_name}!</b>
+}
+
+menu-button-record = 🗒️ Сделать запись
+
+
 record-registration-start = Пройдите пожалуйста небольшую регистрацию прежде чем мы вас запишем
 record-fill-name =
     <b>Введите ваше имя</b>

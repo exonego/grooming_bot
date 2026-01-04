@@ -24,3 +24,17 @@ async def send_contact_getter(
         "button_cancel": i18n.button.cancel(),
         "button_back": i18n.button.back(),
     }
+
+
+async def register_getter(
+    dialog_manager: DialogManager, i18n: TranslatorRunner, **kwargs
+) -> dict[str, str]:
+    return {
+        "record_register": i18n.record.register(
+            first_name=dialog_manager.dialog_data.get("first_name"),
+            phone_number=dialog_manager.dialog_data.get("phone_number"),
+        ),
+        "button_cancel": i18n.button.cancel(),
+        "button_back": i18n.button.back(),
+        "button_confirm": i18n.button.confirm(),
+    }

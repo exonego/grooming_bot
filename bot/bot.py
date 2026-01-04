@@ -11,7 +11,7 @@ from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 
 
 from bot.handlers.start import start_router
-from bot.handlers.user.user_cmd import user_cmd_router
+from bot.dialogs import user_router
 from bot.middlewares import (
     DbSessionMiddleware,
     ShadowBanMiddleware,
@@ -64,7 +64,7 @@ async def main(config: Config) -> None:
 
     # Include routers into dispatcher
     logger.info("Including routers into dispatcher...")
-    dp.include_routers(start_router, user_cmd_router)
+    dp.include_routers(start_router, user_router)
 
     # Register middlewares
     logger.info("Registration middlewares...")
