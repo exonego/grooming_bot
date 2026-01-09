@@ -20,7 +20,7 @@ class RecordDate(Base):
     )
 
     day: Mapped[date] = mapped_column(Date, primary_key=True)
-    blocked: Mapped[str] = mapped_column(Text, nullable=True, default=None)
+    blocked: Mapped[str | None] = mapped_column(Text, nullable=True)
     weekday_num: Mapped[int] = mapped_column(Integer, ForeignKey("weekdays.num"))
 
     weekday: Mapped[Weekday] = relationship(

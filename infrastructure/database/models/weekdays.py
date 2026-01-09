@@ -14,7 +14,7 @@ class Weekday(Base):
     __tablename__ = "weekdays"
 
     num: Mapped[int] = mapped_column(Integer, primary_key=True)
-    blocked: Mapped[str] = mapped_column(Text, nullable=True, default=None)
+    blocked: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     record_dates: Mapped[list[RecordDate]] = relationship(
         back_populates="weekday", cascade="delete", lazy="selectin"

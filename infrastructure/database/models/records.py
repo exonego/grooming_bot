@@ -43,13 +43,11 @@ class Record(Base):
         BigInteger,
         ForeignKey("tg_users.tg_id", ondelete="CASCADE"),
         nullable=True,
-        default=None,
     )
     phone_client_id: Mapped[int | None] = mapped_column(
         BigInteger,
         ForeignKey("phone_clients.id", ondelete="CASCADE"),
         nullable=True,
-        default=None,
     )
     gr_service: Mapped[str] = mapped_column(Text, nullable=False)
     day: Mapped[date] = mapped_column(
